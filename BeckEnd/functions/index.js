@@ -1,8 +1,17 @@
 const functions = require('firebase-functions');
+const cors = require('cors')({
+    origin: true,
+    methods: "GET,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+  });
 
- exports.translate = functions.https.onRequest((request, response) => {   
-  const text = request.body.texto;
-  const str =
+ exports.translate = functions.https.onRequest((request, response) => { 
+     
+    cors(request, response, async () => {
+
+    const text = request.body.texto;
+    const str =
       [
           ['a', 'b', 'c'],
           ['d', 'e', 'f'],
@@ -23,4 +32,5 @@ const functions = require('firebase-functions');
       result += str[tecla][caracter];
   }
   return response.send(result);
+    });
 });
